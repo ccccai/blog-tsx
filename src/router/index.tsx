@@ -1,7 +1,7 @@
 import React from 'react'
 import Loadable from 'react-loadable'
 import Loading from '../components/Loading'
-import App from '../pages/App'
+import App from '../containers/App'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 const RouterList: any[] = [

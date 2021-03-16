@@ -1,20 +1,27 @@
 import React, { useState } from 'react'
 import { Col, Row, Drawer } from 'antd'
-import { Link, useHistory, withRouter } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import '../styles/nav.less'
 import { ReactComponent as Bear } from '../assets/images/svg/bear.svg'
 import { ReactComponent as More } from '../assets/images/svg/more.svg'
 import { ReactComponent as Close } from '../assets/images/svg/close-drawer.svg'
 import { navList as menuList } from '../assets/settings'
 
-const NavLeft = withRouter(() => (
+import { ISetActiveNavAction } from '../actions'
+
+export interface IProps {
+  activeNav: number,
+  setActiveNav: (activeNav: number) => ISetActiveNavAction,
+}
+
+const NavLeft = () => (
   <div className="top-nav-left">
     <Link className="logo" to="/" >
       <Bear />
       <span>CAISHIYIN'S BLOG</span>
     </Link>
   </div>
-))
+)
 const NavCenter = ({ onClick, activeIndex }: any) => (
   <div className="top-menu-nav">
     <ul className="menu-nav-content">
@@ -28,22 +35,17 @@ const NavCenter = ({ onClick, activeIndex }: any) => (
     </ul>
   </div>
 )
-// const NavRight = () => (
-//   <div className="top-nav-right">
-//     gggg
-//   </div>
-// )
 
-const TopNav: React.FC = () => {
+const TopNav = ( { activeNav, setActiveNav }: IProps) => {
   const [visible, setVisible] = useState(false)
-  const [activeNavIndex, setActiveNavIndex] = useState(0)
   const history = useHistory()
   const drawerStyle: React.CSSProperties = {
     color: '#eaa151',
     backgroundColor: '#004853'
   }
   const toRouter = (index: number, url: string) => {
-    setActiveNavIndex(index)
+    setActiveNav(index)
+    console.log('wwww', index)
     history.push(url)
   }
   const handleDrawer = () => {
@@ -58,7 +60,7 @@ const TopNav: React.FC = () => {
       <Row justify="center">
         <Col className="nav-content" xs={22} sm={22} md={22} lg={22} xl={20} xxl={16} style={{maxWidth: 1100}}>
           <NavLeft />
-          <NavCenter activeIndex={activeNavIndex} onClick={ toRouter } />
+          <NavCenter activeIndex={activeNav} onClick={ toRouter } />
         </Col>
       </Row>
       <div className="mobile-nav-content">
