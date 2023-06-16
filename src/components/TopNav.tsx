@@ -63,7 +63,7 @@ const TopNav = ({ currentNav }: IProps) => {
             <div className='mobile-nav-content'>
                 <More onClick={handleDrawer} className='more' title='点击展开导航' />
                 <NavLeft />
-                <Drawer width='100' placement='left' closable={false} onClose={onCloseDrawer} visible={visible} drawerStyle={drawerStyle} bodyStyle={{ padding: 0 }}>
+                <Drawer width='100' placement='left' closable={false} onClose={onCloseDrawer} open={visible} drawerStyle={drawerStyle} bodyStyle={{ padding: 0 }}>
                     <div onClick={onCloseDrawer} className='drawer-close'>
                         <Close className='drawer-close-svg' />
                     </div>

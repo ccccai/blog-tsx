@@ -1,4 +1,4 @@
-import React, { Component, ReactHTML } from 'react'
+import React, { Component, ReactNode } from 'react'
 import TopNav from '../components/TopNav'
 import BottomNav from '../components/BottomNav'
 import { Layout } from 'antd'
@@ -15,7 +15,7 @@ interface ILocation {
 
 export interface IProps {
     activeNav: number
-    children: ReactHTML
+    children: ReactNode
     location: ILocation
     dispatch: Dispatch
 }
