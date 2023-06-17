@@ -1,3 +1,11 @@
+/*
+ * @Author: caishiyin
+ * @Date: 2020-12-09 15:15:06
+ * @LastEditTime: 2023-06-18 01:59:33
+ * @LastEditors: caishiyin
+ * @Description:
+ * @FilePath: /blog-tsx/src/index.tsx
+ */
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import * as serviceWorker from './serviceWorker'

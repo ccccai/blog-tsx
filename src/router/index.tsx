@@ -2,6 +2,7 @@ import React from 'react'
 import Loadable from 'react-loadable'
 import Loading from '../components/Loading'
 import App from '../containers/App'
+import ScrollToTop from '../components/ScrollToTop'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 const RouterList: any[] = [
@@ -29,21 +30,23 @@ const RouterList: any[] = [
 
 const RouterMap = () => (
     <Router>
-        <App>
-            <Switch>
-                {RouterList.map(item => (
-                    <Route
-                        key={item.path}
-                        exact={true}
-                        path={item.path}
-                        component={Loadable({
-                            loader: item.component,
-                            loading: Loading,
-                        })}
-                    />
-                ))}
-            </Switch>
-        </App>
+        <ScrollToTop>
+            <App>
+                <Switch>
+                    {RouterList.map(item => (
+                        <Route
+                            key={item.path}
+                            exact={true}
+                            path={item.path}
+                            component={Loadable({
+                                loader: item.component,
+                                loading: Loading,
+                            })}
+                        />
+                    ))}
+                </Switch>
+            </App>
+        </ScrollToTop>
     </Router>
 )
 
