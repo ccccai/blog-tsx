@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import * as serviceWorker from './serviceWorker'
 import { ConfigProvider } from 'antd'
 import { Provider } from 'react-redux'
-import { applyMiddleware, createStore } from 'redux'
+import { applyMiddleware, legacy_createStore as createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import reducer from './reducers'
 import zhCN from 'antd/es/locale/zh_CN'
@@ -12,7 +12,7 @@ import 'lib-flexible'
 import './styles/index.less'
 
 const sagaMiddleware = createSagaMiddleware()
-const store = createStore(reducer, applyMiddleware(sagaMiddleware))
+const store = createStore(reducer as any, applyMiddleware(sagaMiddleware) as any)
 const rootElement = document.getElementById('root') as Element
 const root = ReactDOM.createRoot(rootElement)
 root.render(
