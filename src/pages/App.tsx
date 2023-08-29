@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from 'react'
+import { Component, ReactNode } from 'react'
 import TopNav from '../components/TopNav'
 import BottomNav from '../components/BottomNav'
 import { Layout } from 'antd'

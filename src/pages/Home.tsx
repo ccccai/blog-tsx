@@ -1,12 +1,12 @@
 /*
  * @Author: caishiyin
  * @Date: 2020-06-14 23:10:48
- * @LastEditTime: 2023-06-15 16:45:39
+ * @LastEditTime: 2023-08-29 20:18:50
  * @LastEditors: caishiyin
  * @Description:
  * @FilePath: /blog-tsx/src/pages/Home.tsx
  */
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Card, Row, Col, Tag, Avatar } from 'antd'
 import '../styles/home.less'

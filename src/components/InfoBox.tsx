@@ -1,4 +1,11 @@
-import React from 'react'
+/*
+ * @Author: caishiyin
+ * @Date: 2020-12-09 15:15:06
+ * @LastEditTime: 2023-08-29 20:16:13
+ * @LastEditors: caishiyin
+ * @Description: 
+ * @FilePath: /blog-tsx/src/components/InfoBox.tsx
+ */
 import { Row, Col } from 'antd'
 import avatarUrl from '../assets/images/avatar.jpg'
 import { ReactComponent as Git } from '../assets/images/svg/github.svg'

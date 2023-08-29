@@ -1,52 +1,52 @@
 /*
  * @Author: caishiyin
  * @Date: 2020-06-14 23:33:52
- * @LastEditTime: 2020-12-06 17:53:09
+ * @LastEditTime: 2023-08-29 23:33:31
  * @LastEditors: caishiyin
  * @Description: https://www.npmjs.com/package/craco-less
- * @FilePath: /blog-react-ts/craco.config.js
+ * @FilePath: /blog-tsx/craco.config.js
  */
 const CracoLessPlugin = require('craco-less')
 
 module.exports = {
-  plugins: [
-    {
-      plugin: CracoLessPlugin,
-      options: {
-        postcssLoaderOptions: {
-          ident: "postcss",
-          plugins: () => [
-            require('postcss-pxtorem')({
-              rootValue: 54, // 换算基数，默认100，自行根据效果调整。
-              mediaQuery: false, // （布尔值）允许在媒体查询中转换px。
-              minPixelValue: 3, // 设置要替换的最小像素值默认0，这里表示大于3px会被转rem。
-              propList: ['*']
-              // propList: ['*', '!border*', '!font-size*', '!letter-spacing'],
-              // propWhiteList: []
-            })
-          ]
+    webpack: {
+        /**
+         * 重写 webpack 任意配置
+         *  - 与直接定义 configure 对象方式互斥
+         *  - 几乎所有的 webpack 配置均可以在 configure 函数中读取，然后覆盖
+         */
+        configure: {
+            // module: {
+            //     rules: [
+            //         {
+            //             test: /\.js$/,
+            //             enforce: "pre",
+            //             // exclude: /node_modules/,
+            //             use: ["source-map-loader"],
+            //         },
+            //     ],
+            // },
+            ignoreWarnings: [/Failed to parse source map/],
         },
-        lessLoaderOptions: {
-          lessOptions: {
-            modifyVars: {
-              '@primary-color': '#6dafac', // 全局主色
-              '@link-color': '#002230', // 链接色
-              '@success-color': '#52c41a', // 成功色
-              '@warning-color': '#faad14', // 警告色
-              '@error-color': '#f5222d', // 错误色
-              '@font-size-base': '14px', // 主字号
-              '@heading-color': '#00455a', // 标题色
-              '@text-color': '#000010', // 主文本色
-              '@text-color-secondary': '#d57228', // 次文本色
-              '@disabled-color': '#002162', // 失效色
-              '@border-radius-base': '6px', // 组件/浮层圆角
-              '@border-color-base': '#bd8e5d', // 边框色
-              '@box-shadow-base': '0 2px 8px rgba(0, 0, 0, 0.15)' // 浮层阴影
+    },
+    plugins: [
+        {
+            plugin: CracoLessPlugin,
+            options: {
+                postcssLoaderOptions: {
+                    ident: 'postcss',
+                    plugins: () => [
+                        require('postcss-pxtorem')({
+                            rootValue: 54, // 换算基数，默认100，自行根据效果调整。
+                            mediaQuery: false, // （布尔值）允许在媒体查询中转换px。
+                            minPixelValue: 3, // 设置要替换的最小像素值默认0，这里表示大于3px会被转rem。
+                            propList: ['*'],
+                            // propList: ['*', '!border*', '!font-size*', '!letter-spacing'],
+                            // propWhiteList: []
+                        }),
+                    ],
+                },
             },
-            javascriptEnabled: true
-          }
-        }
-      }
-    }
-  ]
+        },
+    ],
 }

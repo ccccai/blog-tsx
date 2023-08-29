@@ -1,14 +1,15 @@
 /*
  * @Author: caishiyin
  * @Date: 2023-06-15 16:35:54
- * @LastEditTime: 2023-06-18 02:47:17
+ * @LastEditTime: 2023-08-29 23:44:41
  * @LastEditors: caishiyin
  * @Description: 文章查看
  * @FilePath: /blog-tsx/src/pages/Article.tsx
  */
-import React, { Component } from 'react'
-import { Row, Col } from 'antd'
-import MdViewer from '../components/MdViewer'
+import { Component } from 'react'
+import { Row, Col, Button, FloatButton } from 'antd'
+// import MdViewer from '../components/MdViewer'
+import MdEditor from '../components/MdEditor'
 import '../styles/article.less'
 
 const Empty = ({ tips = '' }: any) => (
@@ -18,8 +19,6 @@ const Empty = ({ tips = '' }: any) => (
 )
 
 const content = [
-    '![image](https://uicdn.toast.com/toastui/img/tui-editor-bi.png)',
-    '',
     '# Awesome Editor!',
     '',
     'It has been _released as opensource in 2018_ and has ~~continually~~ evolved to **receive 10k GitHub ⭐️ Stars**.',
@@ -74,26 +73,47 @@ interface IProps {
 export default class Article extends Component<IProps> {
     public state = {
         article: '',
+        contentHeight: 0,
     }
 
     public componentDidMount(): void {
-        const { content, location } = this.props
-        const query = new URLSearchParams(location.search)
-        const param = query.get('id') || ''
+        const { content, location } = this.props,
+            query = new URLSearchParams(location.search),
+            param = query.get('id') || ''
+
+        const innerHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
+            height = innerHeight - 80 - 20
 
         this.setState({
             article: content || getArticle(param),
+            contentHeight: height,
         })
     }
+
     public render() {
         return !this.state.article ? (
             <Empty tips='' />
         ) : (
-            <Row justify='center' className='article-content'>
-                <Col xs={24} sm={22} xl={20} xxl={18}>
-                    <MdViewer initialValue={this.state.article} />
-                </Col>
-            </Row>
+            <div className='article-content'>
+                <Row justify='center'>
+                    <Col xs={24} sm={22} xxl={20}>
+                        <div className='md-editor-content'>
+                            <MdEditor initialValue={this.state.article} height={`${this.state.contentHeight}px` || '510px'} />
+                        </div>
+
+                        <div className='md-editor-btn'>
+                            <Button className='submit-btn' type='primary' size='large'>提交</Button>
+                            <Button className='cancel-btn' size='large'>取消</Button>
+                        </div>
+                    </Col>
+                    <Col xs={24} sm={22} xxl={20} className='md-viewer-content'>
+                        {/* <MdViewer initialValue={this.state.article} /> */}
+                    </Col>
+                </Row>
+
+                {/* <BackTop target={() => document.getElementById('content') as HTMLElement} visibilityHeight={100} /> */}
+                <FloatButton.BackTop visibilityHeight={0} />
+            </div>
         )
     }
 }

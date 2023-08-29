@@ -1,4 +1,3 @@
-import React from 'react';
 import '../styles/notes-list.less'
 import { Pagination } from 'antd'
 import { ReactComponent as Time } from '../assets/images/svg/time.svg'

@@ -1,12 +1,12 @@
 /*
  * @Author: caishiyin
  * @Date: 2020-12-09 15:15:06
- * @LastEditTime: 2023-02-10 14:39:31
+ * @LastEditTime: 2023-08-29 20:19:28
  * @LastEditors: caishiyin
  * @Description: 
  * @FilePath: /blog-tsx/src/pages/About.tsx
  */
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { Row, Col } from 'antd'
 import BannerImgUrl from '../assets/images/banner-about.jpg'
 import BannerBox from '../components/BannerBox'

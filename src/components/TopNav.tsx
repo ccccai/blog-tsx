@@ -7,7 +7,7 @@ import { ReactComponent as Close } from '../assets/images/svg/close-drawer.svg'
 import { navList as menuList } from '../assets/settings'
 import '../styles/nav.less'
 
-export interface IProps {
+interface IProps {
     currentNav: number
 }
 
