@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Col, Row, Drawer } from 'antd'
 import { Link, useHistory } from 'react-router-dom'
 import { ReactComponent as Bear } from '../assets/images/svg/bear.svg'
@@ -32,10 +32,11 @@ const NavCenter = ({ onClick, activeIndex }: any) => (
     </div>
 )
 
-const TopNav = ({ currentNav }: IProps) => {
+const TopNav: React.FC<IProps> = ({ currentNav }) => {
     const [visible, setVisible] = useState(false)
     const [activeNav, setActiveNav] = useState(currentNav)
     const history = useHistory()
+    
     const drawerStyle: React.CSSProperties = {
         color: '#eaa151',
         backgroundColor: '#004853',
@@ -51,6 +52,11 @@ const TopNav = ({ currentNav }: IProps) => {
     const onCloseDrawer = () => {
         setVisible(false)
     }
+
+    useEffect(() => {
+        console.log(898989, currentNav)
+        setActiveNav(currentNav)
+    }, [currentNav])
 
     return (
         <div className='top-nav'>

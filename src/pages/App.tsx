@@ -1,10 +1,10 @@
-import { Component, ReactNode } from 'react'
+import { useEffect, ReactNode, useState } from 'react'
 import TopNav from '../components/TopNav'
 import BottomNav from '../components/BottomNav'
 import { Layout } from 'antd'
 import { Dispatch } from 'redux'
 import { navList as menuList } from '../assets/settings'
-import { setActiveNav } from '../actions'
+// import { setActiveNav } from '../actions'
 import '../styles/app.less'
 
 const { Header, Content, Footer } = Layout
@@ -14,7 +14,6 @@ interface ILocation {
 }
 
 export interface IProps {
-    activeNav: number
     children: ReactNode
     location: ILocation
     dispatch: Dispatch
@@ -31,27 +30,38 @@ const getNavIndex = (location: ILocation) => {
         }
     })
     
-    return hasCurrent ? currentNavIndex : 0
+    console.log('hasCurrent', hasCurrent)
+    return hasCurrent ? currentNavIndex : -1
 }
 
-class App extends Component<IProps> {
-    public componentDidMount() {
-        const { location } = this.props
-
-        setActiveNav(getNavIndex(location))
+const preloadImg = (imgs: Array<any>) => {
+    const images = []
+    for (let i = 0; i < imgs.length; i++) {
+        images[i] = new Image()
+        images[i].src = imgs[i]
     }
-    public render() {
-        const { activeNav, children } = this.props
-        return (
+}
+
+const App: React.FC<IProps> = ({ children, location }) => {
+    const [currentNav, setCurrentNav] = useState(-1)
+
+    window.addEventListener('load', async () => {
+        console.log('load image...')
+        const bannerImgs = menuList.map((item: any) => item.bannerImgUrl)
+        await preloadImg(bannerImgs)
+    })
+
+    useEffect(() => {
+        setCurrentNav(getNavIndex(location))
+    }, [location])
+
+    return (
             <Layout className='app-layout'>
                 <Header className='header'>
-                    <TopNav currentNav={activeNav} />
+                    <TopNav currentNav={currentNav} />
                 </Header>
                 <Content
                     className='content'
-                    // style={{
-                    //     minHeight: `calc(${document.body.offsetHeight}px - 380px)`,
-                    // }}
                 >
                     {children}
                 </Content>
@@ -60,7 +70,6 @@ class App extends Component<IProps> {
                 </Footer>
             </Layout>
         )
-    }
 }
 
 export default App

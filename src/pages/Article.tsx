@@ -1,14 +1,14 @@
 /*
  * @Author: caishiyin
  * @Date: 2023-06-15 16:35:54
- * @LastEditTime: 2023-08-29 23:44:41
+ * @LastEditTime: 2023-08-30 18:19:53
  * @LastEditors: caishiyin
  * @Description: 文章查看
  * @FilePath: /blog-tsx/src/pages/Article.tsx
  */
-import { Component } from 'react'
+import { useEffect, useState } from 'react'
 import { Row, Col, Button, FloatButton } from 'antd'
-// import MdViewer from '../components/MdViewer'
+import MdViewer from '../components/MdViewer'
 import MdEditor from '../components/MdEditor'
 import '../styles/article.less'
 
@@ -49,6 +49,60 @@ const content = [
     '        2. Preview',
     '',
     '## Support Wrappers',
+    '* CommonMark + GFM Specifications',
+    '   * Live Preview',
+    '   * Scroll Sync',
+    '   * Auto Indent',
+    '   * Syntax Highlight',
+    '        1. Markdown',
+    '        2. Preview',
+    '',
+    '## Support Wrappers',
+    '* CommonMark + GFM Specifications',
+    '   * Live Preview',
+    '   * Scroll Sync',
+    '   * Auto Indent',
+    '   * Syntax Highlight',
+    '        1. Markdown',
+    '        2. Preview',
+    '',
+    '## Support Wrappers',
+    '* CommonMark + GFM Specifications',
+    '   * Live Preview',
+    '   * Scroll Sync',
+    '   * Auto Indent',
+    '   * Syntax Highlight',
+    '        1. Markdown',
+    '        2. Preview',
+    '',
+    '## Support Wrappers',
+    '* CommonMark + GFM Specifications',
+    '   * Live Preview',
+    '   * Scroll Sync',
+    '   * Auto Indent',
+    '   * Syntax Highlight',
+    '        1. Markdown',
+    '        2. Preview',
+    '',
+    '## Support Wrappers',
+    '* CommonMark + GFM Specifications',
+    '   * Live Preview',
+    '   * Scroll Sync',
+    '   * Auto Indent',
+    '   * Syntax Highlight',
+    '        1. Markdown',
+    '        2. Preview',
+    '',
+    '## Support Wrappers',
+    '* CommonMark + GFM Specifications',
+    '   * Live Preview',
+    '   * Scroll Sync',
+    '   * Auto Indent',
+    '   * Syntax Highlight',
+    '        1. Markdown',
+    '        2. Preview',
+    '',
+    '## Support Wrappers',
     '',
     '> * Wrappers',
     '>    1. [x] React',
@@ -66,54 +120,59 @@ interface ILocation {
 }
 
 interface IProps {
-    content: string
     location: ILocation
 }
 
-export default class Article extends Component<IProps> {
-    public state = {
-        article: '',
-        contentHeight: 0,
-    }
+const Article: React.FC<IProps> = ({ location }) => {
+    const [article, setArticle] = useState('')
+    const [pageHeight, setPageHeight] = useState(0)
+    const [contentHeight, setContentHeight] = useState(0)
+    const [isEdit, setIsEdit] = useState(false)
 
-    public componentDidMount(): void {
-        const { content, location } = this.props,
-            query = new URLSearchParams(location.search),
-            param = query.get('id') || ''
+    useEffect(() => {
+        const query = new URLSearchParams(location.search),
+            articleId = query.get('id') || '',
+            editArticleId = query.get('editid') || ''
 
         const innerHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
             height = innerHeight - 80 - 20
 
-        this.setState({
-            article: content || getArticle(param),
-            contentHeight: height,
-        })
-    }
+        setArticle(content || getArticle(articleId || editArticleId))
+        setPageHeight(innerHeight)
+        setContentHeight(height)
+        setIsEdit(Boolean(!Number(articleId) && Number(editArticleId)))
+    }, [location])
 
-    public render() {
-        return !this.state.article ? (
-            <Empty tips='' />
-        ) : (
-            <div className='article-content'>
-                <Row justify='center'>
+    return !article ? (
+        <Empty tips='' />
+    ) : (
+        <div className='article-content'>
+            <Row justify='center'>
+                {isEdit ? (
                     <Col xs={24} sm={22} xxl={20}>
                         <div className='md-editor-content'>
-                            <MdEditor initialValue={this.state.article} height={`${this.state.contentHeight}px` || '510px'} />
+                            <MdEditor initialValue={article} height={`${contentHeight}px` || '510px'} />
                         </div>
 
                         <div className='md-editor-btn'>
-                            <Button className='submit-btn' type='primary' size='large'>提交</Button>
-                            <Button className='cancel-btn' size='large'>取消</Button>
+                            <Button className='submit-btn' type='primary' size='large'>
+                                提交
+                            </Button>
+                            <Button className='cancel-btn' size='large'>
+                                取消
+                            </Button>
                         </div>
                     </Col>
+                ) : (
                     <Col xs={24} sm={22} xxl={20} className='md-viewer-content'>
-                        {/* <MdViewer initialValue={this.state.article} /> */}
+                        <MdViewer initialValue={article} />
                     </Col>
-                </Row>
+                )}
+            </Row>
 
-                {/* <BackTop target={() => document.getElementById('content') as HTMLElement} visibilityHeight={100} /> */}
-                <FloatButton.BackTop visibilityHeight={0} />
-            </div>
-        )
-    }
+            <FloatButton.BackTop visibilityHeight={pageHeight / 2} />
+        </div>
+    )
 }
+
+export default Article

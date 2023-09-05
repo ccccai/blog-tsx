@@ -1,7 +1,7 @@
 /*
  * @Author: caishiyin
  * @Date: 2020-12-09 15:15:06
- * @LastEditTime: 2023-08-29 22:44:22
+ * @LastEditTime: 2023-08-30 00:17:42
  * @LastEditors: caishiyin
  * @Description:
  * @FilePath: /blog-tsx/src/index.tsx
@@ -27,7 +27,6 @@ root.render(
         locale={zhCN}
         theme={{
             token: {
-                // Seed Token，影响范围大
                 colorPrimary: '#6dafac',// 全局主色
                 colorLink: '#002230', // 链接色
                 colorSuccess: '#52c41a', // 成功色
@@ -40,6 +39,7 @@ root.render(
                 colorTextDisabled: '#002162', // 失效色
                 colorBorder: '#bd8e5d', // 边框色
                 boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)', // 浮层阴影
+                fontFamily: 'CartographMonoCFMedium' // 界面字体
             },
         }}
     >

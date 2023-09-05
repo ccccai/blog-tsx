@@ -1,50 +1,21 @@
 /*
  * @Author: caishiyin
  * @Date: 2020-12-09 15:15:06
- * @LastEditTime: 2023-08-29 20:16:13
+ * @LastEditTime: 2023-08-30 19:40:23
  * @LastEditors: caishiyin
- * @Description: 
+ * @Description:
  * @FilePath: /blog-tsx/src/components/InfoBox.tsx
  */
 import { Row, Col } from 'antd'
+import { Link } from 'react-router-dom'
 import avatarUrl from '../assets/images/avatar.jpg'
 import { ReactComponent as Git } from '../assets/images/svg/github.svg'
 import { ReactComponent as Mail } from '../assets/images/svg/mail.svg'
 import { ReactComponent as Category } from '../assets/images/svg/category.svg'
 import { ReactComponent as Tags } from '../assets/images/svg/tag.svg'
 import '../styles/blog-info-box.less'
+import { categoryList, tagsList } from '../assets/settings'
 
-const tagsList = [
-    'Android',
-    'Babel',
-    'Webpack',
-    'CSS',
-    'ECMAScript',
-    'Git',
-    'LESS',
-    'SESS',
-    'GitHub',
-    'HTML',
-    'JavaScript',
-    'ES6',
-    'NodeJs',
-    'React',
-    'ReactNative',
-    'TypeScript',
-    'Koa',
-    'Ant Design',
-    'Mysql',
-    'PHP',
-    'Npm',
-    'px2rem',
-    'component',
-    'postman',
-    'umi',
-    'Nginx',
-    'Linux',
-    'Apache',
-    'PhpStudy',
-]
 const getRendomFontSize = (min: number, max: number) => {
     const length = max - min
     const num = Math.ceil(Math.random() * length + min)
@@ -54,7 +25,11 @@ const toTag = () => {
     console.log(33333)
 }
 
-const BlogInfoBox = () => {
+const BlogInfoBox: React.FC = () => {
+    const query = new URLSearchParams(window.location.search),
+        categoryId = query.get('category') || 0,
+        tag = query.get('tag') || ''
+
     return (
         <Row gutter={[0, 30]} className='blog-info-content' justify='space-around'>
             <Col span={24} className='blog-info-box persion-info'>
@@ -72,16 +47,22 @@ const BlogInfoBox = () => {
                 </div>
                 <ul className='detail-list'>
                     <li className='detail-item'>
-                        <div className='detail-item-top'>ARTICLES</div>
-                        <div className='detail-item-bottom'>24</div>
+                        <Link to={`/tech`}>
+                            <div className='detail-item-top'>ARTICLES</div>
+                            <div className='detail-item-bottom'>24</div>
+                        </Link>
                     </li>
                     <li className='detail-item'>
-                        <div className='detail-item-top'>TAGS</div>
-                        <div className='detail-item-bottom'>12</div>
+                        <Link to={`/tech`}>
+                            <div className='detail-item-top'>TAGS</div>
+                            <div className='detail-item-bottom'>12</div>
+                        </Link>
                     </li>
                     <li className='detail-item'>
-                        <div className='detail-item-top'>CATEGORY</div>
-                        <div className='detail-item-bottom'>5</div>
+                        <Link to={`/tech`}>
+                            <div className='detail-item-top'>CATEGORY</div>
+                            <div className='detail-item-bottom'>3</div>
+                        </Link>
                     </li>
                 </ul>
                 <ul className='third-party'>
@@ -99,26 +80,16 @@ const BlogInfoBox = () => {
                     <span>Categories</span>
                 </div>
                 <ul className='category-list'>
-                    <li className='category-list-item'>
-                        <span>前端开发</span>
-                        <span className='count'>3</span>
-                    </li>
-                    <li className='category-list-item'>
-                        <span>后端开发</span>
-                        <span className='count'>3</span>
-                    </li>
-                    <li className='category-list-item'>
-                        <span>工具</span>
-                        <span className='count'>3</span>
-                    </li>
-                    <li className='category-list-item'>
-                        <span>Android</span>
-                        <span className='count'>3</span>
-                    </li>
-                    <li className='category-list-item'>
-                        <span>IOS</span>
-                        <span className='count'>3</span>
-                    </li>
+                    {categoryList.map(category => {
+                        return (
+                            <Link to={`/tech?category=${category.id}`} key={`category${category.id}`}>
+                                <li className={`category-list-item ${Number(categoryId) === Number(category.id) ? 'active-category-item' : ''}`}>
+                                    <span>{category.name}</span>
+                                    <span className='count'>3</span>
+                                </li>
+                            </Link>
+                        )
+                    })}
                 </ul>
             </Col>
             <Col span={24} className='blog-info-box tag-info'>
@@ -128,9 +99,11 @@ const BlogInfoBox = () => {
                 </div>
                 <ul className='tags-list'>
                     {tagsList.map((item, index) => (
-                        <li className='tags-list-item' key={index} style={{ fontSize: getRendomFontSize(14, 24) }}>
-                            <span onClick={toTag}>{item}</span>
-                        </li>
+                        <Link to={`/tech?tag=${encodeURIComponent(item)}`} key={`tags${index}`}>
+                            <li className={`tags-list-item ${tag === item ? 'active-tags-item' : ''}`} style={{ fontSize: tag === item ? 24 : getRendomFontSize(12, 20) }}>
+                                <span onClick={toTag}>{item}</span>
+                            </li>
+                        </Link>
                     ))}
                 </ul>
             </Col>

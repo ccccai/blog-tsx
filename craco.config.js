@@ -1,7 +1,7 @@
 /*
  * @Author: caishiyin
  * @Date: 2020-06-14 23:33:52
- * @LastEditTime: 2023-08-29 23:33:31
+ * @LastEditTime: 2023-08-29 23:47:25
  * @LastEditors: caishiyin
  * @Description: https://www.npmjs.com/package/craco-less
  * @FilePath: /blog-tsx/craco.config.js
@@ -16,16 +16,6 @@ module.exports = {
          *  - 几乎所有的 webpack 配置均可以在 configure 函数中读取，然后覆盖
          */
         configure: {
-            // module: {
-            //     rules: [
-            //         {
-            //             test: /\.js$/,
-            //             enforce: "pre",
-            //             // exclude: /node_modules/,
-            //             use: ["source-map-loader"],
-            //         },
-            //     ],
-            // },
             ignoreWarnings: [/Failed to parse source map/],
         },
     },

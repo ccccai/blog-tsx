@@ -1,16 +1,15 @@
 /*
  * @Author: caishiyin
  * @Date: 2020-06-14 23:10:48
- * @LastEditTime: 2023-08-29 20:18:50
+ * @LastEditTime: 2023-08-30 16:39:30
  * @LastEditors: caishiyin
  * @Description:
  * @FilePath: /blog-tsx/src/pages/Home.tsx
  */
-import { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Card, Row, Col, Tag, Avatar } from 'antd'
+import { navList as menuList } from '../assets/settings'
 import '../styles/home.less'
-import topImgUrl from '../assets/images/home-banner.jpg'
 import BlogInfo from '../components/InfoBox'
 
 const { Meta } = Card
@@ -39,15 +38,21 @@ const FeaturedArticlesDescription = () => (
     </div>
 )
 
-const HeaderImg = () => (
-    <div
-        className='home-top-bg'
-        style={{
-            // height: document.body.offsetHeight,
-            backgroundImage: `url(${topImgUrl})`,
-        }}
-    />
-)
+const HeaderImg = () => {
+    let topImgUrl = ''
+    const navIndex = menuList.findIndex(item => item.title_en === 'HOME')
+    if (navIndex > -1) {
+        topImgUrl = menuList[navIndex].bannerImgUrl
+    }
+    return (
+        <div
+            className='home-top-bg'
+            style={{
+                backgroundImage: `url(${topImgUrl})`,
+            }}
+        />
+    )
+}
 
 const ContentBlogInfo = () => (
     <>
@@ -105,19 +110,25 @@ const ContentFeaturedArticles = () => (
         </div>
         <Row gutter={[0, 40]} className='box-content' justify='space-around'>
             <Col span={24} className='card-box'>
-                <Card cover={<div className='cover-img' style={secondStyle} />} className='card-item'>
-                    <FeaturedArticlesDescription />
-                </Card>
+                <Link to='/article?id=222'>
+                    <Card cover={<div className='cover-img' style={secondStyle} />} className='card-item'>
+                        <FeaturedArticlesDescription />
+                    </Card>
+                </Link>
             </Col>
             <Col span={24} className='card-box'>
-                <Card cover={<div className='cover-img' style={secondStyle} />} className='card-item'>
-                    <FeaturedArticlesDescription />
-                </Card>
+                <Link to='/article?id=222'>
+                    <Card cover={<div className='cover-img' style={secondStyle} />} className='card-item'>
+                        <FeaturedArticlesDescription />
+                    </Card>
+                </Link>
             </Col>
             <Col span={24} className='card-box'>
-                <Card cover={<div className='cover-img' style={secondStyle} />} className='card-item'>
-                    <FeaturedArticlesDescription />
-                </Card>
+                <Link to='/article?id=222'>
+                    <Card cover={<div className='cover-img' style={secondStyle} />} className='card-item'>
+                        <FeaturedArticlesDescription />
+                    </Card>
+                </Link>
             </Col>
         </Row>
     </>
@@ -141,36 +152,13 @@ const BodyContent = () => (
     </Row>
 )
 
-export default class Home extends Component {
-    public state = {
-        text: 0,
-        height: document.body.offsetHeight,
-    }
-    public handleClick = () => {
-        console.log(this.refs.homeContent)
-        const dom = this.refs.homeContent as HTMLDivElement
-        if (this.state.text) {
-            dom.style.backgroundColor = '#fff'
-        }
-        console.log(this.state.text)
-        this.setState({
-            text: !this.state.text,
-        })
-        console.log(this.state.text)
-    }
-    render() {
-        // const { height } = this.state
-        return (
-            <div
-                ref='homeContent'
-                className='home'
-                // style={{
-                //     minHeight: height,
-                // }}
-            >
-                <HeaderImg />
-                <BodyContent />
-            </div>
-        )
-    }
+const Home: React.FC = () => {
+    return (
+        <div className='home'>
+            <HeaderImg />
+            <BodyContent />
+        </div>
+    )
 }
+
+export default Home

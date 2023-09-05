@@ -1,6 +1,6 @@
-import { Component } from 'react'
+// import { Component } from 'react'
 import { Row, Col } from 'antd'
-import BannerImgUrl from '../assets/images/banner-life.jpg'
+import { navList as menuList } from '../assets/settings'
 import BannerBox from '../components/BannerBox'
 import NotesList from '../components/NotesList'
 import '../styles/life.less'
@@ -59,19 +59,24 @@ const list = [
         ],
     },
 ]
-export default class Home extends Component {
-    render() {
-        return (
-            <>
-                <BannerBox title='Life Notes' bannerUrl={BannerImgUrl} />
-                <Row justify='center' gutter={25}>
-                    <Col xs={24} sm={22} lg={22} xl={18} xxl={16} className='life-box'>
-                        <div className='life-content'>
-                            <NotesList list={list} />
-                        </div>
-                    </Col>
-                </Row>
-            </>
-        )
+const Life: React.FC = () => {
+    let BannerImgUrl = ''
+    const navIndex = menuList.findIndex(item => item.title_en === 'LIFE')
+    if (navIndex > -1) {
+        BannerImgUrl = menuList[navIndex].bannerImgUrl
     }
+    return (
+        <>
+            <BannerBox title='Life Notes' bannerUrl={BannerImgUrl} />
+            <Row justify='center' gutter={25}>
+                <Col xs={24} sm={22} lg={22} xl={18} xxl={16} className='life-box'>
+                    <div className='life-content'>
+                        <NotesList list={list} />
+                    </div>
+                </Col>
+            </Row>
+        </>
+    )
 }
+
+export default Life
