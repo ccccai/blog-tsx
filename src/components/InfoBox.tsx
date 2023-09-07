@@ -1,7 +1,7 @@
 /*
  * @Author: caishiyin
  * @Date: 2020-12-09 15:15:06
- * @LastEditTime: 2023-09-07 02:09:40
+ * @LastEditTime: 2023-09-07 23:58:48
  * @LastEditors: caishiyin
  * @Description:
  * @FilePath: /blog-tsx/src/components/InfoBox.tsx
@@ -29,15 +29,18 @@ interface IProps {
     blogInfo?: any[]
     categories?: any[]
     tags?: any[]
+    count?: any
 }
 
-const BlogInfoBox: React.FC<IProps> = ({ blogInfo, categories, tags }) => {
+const BlogInfoBox: React.FC<IProps> = ({ blogInfo, categories, tags, count }) => {
     const query = new URLSearchParams(window.location.search),
         categoryId = query.get('category') || 0,
         tag = query.get('tag') || '',
         info = blogInfo && blogInfo.length ? blogInfo[0] : {},
         categoryList = categories || [],
-        tagList = tags || []
+        tagList = tags || [],
+        allCount = count || {},
+        descArr = info.description ? info.description.split('/') : []
 
     return (
         <Row gutter={[0, 30]} className='blog-info-content' justify='space-around'>
@@ -47,38 +50,30 @@ const BlogInfoBox: React.FC<IProps> = ({ blogInfo, categories, tags }) => {
                 </div>
                 <div className='name'>{info.nickName}</div>
                 <div className='sub-title'>
-                    <span>{info.description}</span>
-                    {/* <span>TypeScript/</span>
-                    <span>PHP/</span>
-                    <span>Vue/</span>
-                    <span>React/</span>
-                    <span>Laravel</span> */}
+                    {descArr.map((desc: string, descIndex: number) => (
+                        <span key={'desc' + descIndex}>
+                            {desc}
+                            {descIndex === descArr.length - 1 ? '' : '/'}
+                        </span>
+                    ))}
                 </div>
                 <ul className='detail-list'>
-                    {/* {categoryList.map((item: any, index: number) => (
-                        <li key={index} className='detail-item'>
-                            <Link to='/tech'>
-                                <div className='detail-item-top'>{item.name}</div>
-                                <div className='detail-item-bottom'>24</div>
-                            </Link>
-                        </li>
-                    ))} */}
                     <li className='detail-item'>
                         <Link to={`/tech`}>
                             <div className='detail-item-top'>ARTICLES</div>
-                            <div className='detail-item-bottom'>24</div>
+                            <div className='detail-item-bottom'>{allCount.articles}</div>
                         </Link>
                     </li>
                     <li className='detail-item'>
                         <Link to={`/tech`}>
                             <div className='detail-item-top'>TAGS</div>
-                            <div className='detail-item-bottom'>12</div>
+                            <div className='detail-item-bottom'>{allCount.tags}</div>
                         </Link>
                     </li>
                     <li className='detail-item'>
                         <Link to={`/tech`}>
-                            <div className='detail-item-top'>CATEGORY</div>
-                            <div className='detail-item-bottom'>3</div>
+                            <div className='detail-item-top'>CATEGORIES</div>
+                            <div className='detail-item-bottom'>{allCount.categories}</div>
                         </Link>
                     </li>
                 </ul>
@@ -97,16 +92,14 @@ const BlogInfoBox: React.FC<IProps> = ({ blogInfo, categories, tags }) => {
                     <span>Categories</span>
                 </div>
                 <ul className='category-list'>
-                    {categoryList.map((category, index) => {
-                        return (
-                            <Link to={`/tech?category=${category.id}`} key={`category${index}`}>
-                                <li className={`category-list-item ${Number(categoryId) === Number(category.id) ? 'active-category-item' : ''}`}>
-                                    <span>{category.name}</span>
-                                    <span className='count'>3</span>
-                                </li>
-                            </Link>
-                        )
-                    })}
+                    {categoryList.map((category, index) => (
+                        <Link to={`/tech?category=${category.id}`} key={`category${index}`}>
+                            <li className={`category-list-item ${Number(categoryId) === Number(category.id) ? 'active-category-item' : ''}`}>
+                                <span>{category.name}</span>
+                                <span className='count'>{category.count}</span>
+                            </li>
+                        </Link>
+                    ))}
                 </ul>
             </Col>
             <Col span={24} className='blog-info-box tag-info'>

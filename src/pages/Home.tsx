@@ -1,7 +1,7 @@
 /*
  * @Author: caishiyin
  * @Date: 2020-06-14 23:10:48
- * @LastEditTime: 2023-09-07 01:48:32
+ * @LastEditTime: 2023-09-07 23:30:23
  * @LastEditors: caishiyin
  * @Description:
  * @FilePath: /blog-tsx/src/pages/Home.tsx
@@ -63,7 +63,7 @@ const ContentBlogInfo = (props: any = {}) => {
                 </div>
                 <div className='gap' />
             </div>
-            <BlogInfo blogInfo={data.blogInfo} categories={data.categories} tags={data.tags} />
+            <BlogInfo blogInfo={data.blogInfo} categories={data.categories} tags={data.tags} count={data.count} />
         </>
     )
 }
@@ -76,32 +76,32 @@ const ContentRecentArticle = (props: any = {}) => (
             </div>
             <div className='gap' />
         </div>
-        <Row className='box-content' justify='space-around' gutter={[{ xs: 8, sm: 8, md: 24, xl: 24, xxl: 24 }, 20]}>
+        <Row className='box-content' justify='space-between' gutter={[{ xs: 8, sm: 8, md: 24, xl: 24, xxl: 24 }, 20]}>
             {props.data &&
                 props.data.map((item: any, index: number) => (
-                    <Col key={index} xs={24} sm={24} md={24} lg={8} xl={8} className='card-box'>
+                    <Col key={'dd' + index} xs={24} sm={24} md={24} lg={8} xl={8} className='card-box'>
                         <Link to={item.link}>
                             <Card cover={<div className='cover-img' style={{ ...firstStyle, backgroundImage: `url(${item.cover})` }} />} className='card-item'>
-                                <Meta title={item.title} description={item.subTitle} />
+                                <Meta className='box-bottom-title' title={item.title} description={item.subTitle} />
                             </Card>
                         </Link>
                     </Col>
                 ))}
-            <Col xs={24} sm={24} md={24} lg={8} xl={8} className='card-box'>
+            {/*     <Col xs={24} sm={24} md={24} lg={8} xl={8} className='card-box'>
                 <Link to='/article?id=111'>
                     <Card cover={<div className='cover-img' style={firstStyle} />} className='card-item'>
                         <Meta title='Card title' description='This is the description' />
                     </Card>
                 </Link>
             </Col>
-            {/*     <Col xs={24} sm={24} md={24} lg={8} xl={8} className='card-box'>
-                    <Link to='/article?id=222'>
-                        <Card cover={<div className='cover-img' style={firstStyle} />} className='card-item'>
-                            <Meta title='Card title' description='This is the description' />
-                        </Card>
-                    </Link>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={8} xl={8} className='card-box'>
+            <Col xs={24} sm={24} md={24} lg={8} xl={8} className='card-box'>
+                <Link to='/article?id=222'>
+                    <Card cover={<div className='cover-img' style={firstStyle} />} className='card-item'>
+                        <Meta title='Card title' description='This is the description' />
+                    </Card>
+                </Link>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={8} xl={8} className='card-box'>
                     <Link to='/article?id=333'>
                         <Card cover={<div className='cover-img' style={firstStyle} />} className='card-item'>
                             <Meta title='Card title' description='This is the description' />
@@ -124,14 +124,14 @@ const ContentFeaturedArticles = (props: any = {}) => {
             </div>
             <Row gutter={[0, 40]} className='box-content' justify='space-around'>
                 {data.map((item: any, index: number) => (
-                    <Col key={index} span={24} className='card-box'>
+                    <Col key={'card' + index} span={24} className='card-box'>
                         <Link to={item.link}>
                             <Card cover={<div className='cover-img' style={{ ...secondStyle, backgroundImage: `url(${item.cover})` }} />} className='card-item'>
                                 <div className='box-description'>
                                     <div className='tag-content'>
-                                        {item.tagsList &&
-                                            item.tagsList.map((tag: any, tagIndex: number) => (
-                                                <Tag key={tagIndex} color='cyan'>
+                                        {item.tagIds &&
+                                            item.tagIds.map((tag: any, tagIndex: number) => (
+                                                <Tag key={'tag' + tagIndex} color='cyan'>
                                                     {tag.name}
                                                 </Tag>
                                             ))}
@@ -140,7 +140,7 @@ const ContentFeaturedArticles = (props: any = {}) => {
                                     <h1 className='title'>{item.title || ''}</h1>
                                     <p className='default description'>{item.description}</p>
                                     <div className='bottom-line'>
-                                        <Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />
+                                        <Avatar src={item.authorAvatar} />
                                         <>
                                             <span className='memo'>by </span>
                                             <span className='default'>{item.author}</span>
@@ -180,10 +180,11 @@ const ContentFeaturedArticles = (props: any = {}) => {
 }
 
 const BodyContent = (props: any) => {
-    const { blogInfo, categories, featuredArticles, recentArticles, tags } = props?.data || {}
+    const { blogInfo, categories, featuredArticles, recentArticles, tags, count } = props?.data || {}
     console.log('blogInfo', blogInfo)
     console.log('categories', categories)
     console.log('tags', tags)
+    console.log('count', count)
     return (
         <Row justify='center' className='home-content'>
             <Col xs={22} sm={20} md={17} lg={20} xl={19} xxl={16} className='home-box' style={{ maxWidth: 1100 }}>
@@ -192,7 +193,7 @@ const BodyContent = (props: any) => {
             <Col xs={24} sm={22} md={20} lg={20} xl={19} xxl={16} style={{ maxWidth: 1100 }}>
                 <Row justify='center' gutter={40}>
                     <Col xs={22} sm={22} md={20} lg={10} xl={10} xxl={10} className='home-box'>
-                        <ContentBlogInfo data={{ blogInfo, categories, tags }} />
+                        <ContentBlogInfo data={{ blogInfo, categories, tags, count }} />
                     </Col>
                     <Col xs={22} sm={22} md={20} lg={14} xl={14} xxl={14} className='home-box'>
                         <ContentFeaturedArticles data={featuredArticles} />
