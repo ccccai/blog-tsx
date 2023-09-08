@@ -98,7 +98,6 @@ class Http implements IHttpInterface {
                 }),
             ])
             const result = await res.json()
-            console.log('111111', result)
             return result
         } catch (e: any) {
             dealErrToast(e, abortController)

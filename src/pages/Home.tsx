@@ -1,7 +1,7 @@
 /*
  * @Author: caishiyin
  * @Date: 2020-06-14 23:10:48
- * @LastEditTime: 2023-09-07 23:30:23
+ * @LastEditTime: 2023-09-08 12:02:18
  * @LastEditors: caishiyin
  * @Description:
  * @FilePath: /blog-tsx/src/pages/Home.tsx
@@ -30,12 +30,6 @@ interface IHomePageResData {
     resultMessage: any[]
     data: IHomePageData
 }
-// const FeaturedArticlesDescription = (props: any = {}) => {
-//     const data = props.data || {}
-//     console.log(88888, data)
-//     return (
-//     )
-// }
 
 const HeaderImg = () => {
     let topImgUrl = ''
@@ -87,27 +81,6 @@ const ContentRecentArticle = (props: any = {}) => (
                         </Link>
                     </Col>
                 ))}
-            {/*     <Col xs={24} sm={24} md={24} lg={8} xl={8} className='card-box'>
-                <Link to='/article?id=111'>
-                    <Card cover={<div className='cover-img' style={firstStyle} />} className='card-item'>
-                        <Meta title='Card title' description='This is the description' />
-                    </Card>
-                </Link>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={8} xl={8} className='card-box'>
-                <Link to='/article?id=222'>
-                    <Card cover={<div className='cover-img' style={firstStyle} />} className='card-item'>
-                        <Meta title='Card title' description='This is the description' />
-                    </Card>
-                </Link>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={8} xl={8} className='card-box'>
-                    <Link to='/article?id=333'>
-                        <Card cover={<div className='cover-img' style={firstStyle} />} className='card-item'>
-                            <Meta title='Card title' description='This is the description' />
-                        </Card>
-                    </Link>
-                </Col> */}
         </Row>
     </>
 )
@@ -129,13 +102,12 @@ const ContentFeaturedArticles = (props: any = {}) => {
                             <Card cover={<div className='cover-img' style={{ ...secondStyle, backgroundImage: `url(${item.cover})` }} />} className='card-item'>
                                 <div className='box-description'>
                                     <div className='tag-content'>
-                                        {item.tagIds &&
-                                            item.tagIds.map((tag: any, tagIndex: number) => (
+                                        {item.tagList &&
+                                            item.tagList.map((tag: any, tagIndex: number) => (
                                                 <Tag key={'tag' + tagIndex} color='cyan'>
                                                     {tag.name}
                                                 </Tag>
                                             ))}
-                                        {/* <Tag color='cyan'>cyan</Tag> */}
                                     </div>
                                     <h1 className='title'>{item.title || ''}</h1>
                                     <p className='default description'>{item.description}</p>
@@ -146,34 +118,13 @@ const ContentFeaturedArticles = (props: any = {}) => {
                                             <span className='default'>{item.author}</span>
                                         </>
                                         <span className='gary-gap' />
-                                        <span className='memo'>{item.groupTimestamp}</span>
+                                        <span className='memo'>{item.createDate}</span>
                                     </div>
                                 </div>
                             </Card>
                         </Link>
                     </Col>
                 ))}
-                {/* <Col span={24} className='card-box'>
-                <Link to='/article?id=222'>
-                    <Card cover={<div className='cover-img' style={secondStyle} />} className='card-item'>
-                        <FeaturedArticlesDescription />
-                    </Card>
-                </Link>
-            </Col> */}
-                {/* <Col span={24} className='card-box'>
-                <Link to='/article?id=222'>
-                    <Card cover={<div className='cover-img' style={secondStyle} />} className='card-item'>
-                        <FeaturedArticlesDescription />
-                    </Card>
-                </Link>
-            </Col>
-            <Col span={24} className='card-box'>
-                <Link to='/article?id=222'>
-                    <Card cover={<div className='cover-img' style={secondStyle} />} className='card-item'>
-                        <FeaturedArticlesDescription />
-                    </Card>
-                </Link>
-            </Col> */}
             </Row>
         </>
     )
@@ -181,10 +132,6 @@ const ContentFeaturedArticles = (props: any = {}) => {
 
 const BodyContent = (props: any) => {
     const { blogInfo, categories, featuredArticles, recentArticles, tags, count } = props?.data || {}
-    console.log('blogInfo', blogInfo)
-    console.log('categories', categories)
-    console.log('tags', tags)
-    console.log('count', count)
     return (
         <Row justify='center' className='home-content'>
             <Col xs={22} sm={20} md={17} lg={20} xl={19} xxl={16} className='home-box' style={{ maxWidth: 1100 }}>
@@ -204,25 +151,8 @@ const BodyContent = (props: any) => {
     )
 }
 const Home: React.FC = () => {
-    // const [data, setData] = useState([])
-    // const [loading, setLoading] = useState(false)
     // 组件加载完毕，请求数据
-    // useEffect(() => {
-    //     // setLoading(true)
-    //     fetchHomeData
-    //         .then(res => {
-    //             console.log(8888, res)
-    //             // setData(res.data)
-    //             // setLoading(false)
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error)
-    //             // setLoading(false)
-    //         })
-    // }, [])
     const { loading, data } = useFetchData<IHomePageResData>('/blog/home')
-    console.log(loading)
-    console.log(data)
     return (
         <div className='home'>
             <HeaderImg />
