@@ -1,12 +1,15 @@
 import 'whatwg-fetch'
+import ReactDOM from 'react-dom/client';
 import { getRequestBody } from './common'
 import { IFetchParams, IRequestOptions, IResponseData, EHttpMethods } from '../types/index' // 这里是我项目使用到的js-cookie库，主要是为了拿到token，你们这里改成你们获取token的方式即可
 // import Cookies from 'js-cookie'
 // 捕获异常内部处理的一个提示，和你项目用的 ui 库一致就可以
 import { message } from 'antd'
+import Loading from '../components/Loading'
 
 export const requestPath = 'http://192.168.1.3:3232'
-const CAN_SEND_METHOD = ['POST', 'PUT', 'PATCH', 'DELETE']
+const CAN_SEND_METHOD = ['POST', 'PUT', 'PATCH', 'DELETE']// 當前正在請求的數量
+let requestCount = 0
 
 /**
  * Http request
@@ -21,6 +24,25 @@ type ICustomRequestError = {
     status: number
     statusText: string
     url: string
+}
+
+// 顯示loading
+function showLoading () {
+    if (requestCount === 0) {
+        const dom = document.createElement('div')
+        dom.setAttribute('id', 'loading')
+        document.body.appendChild(dom)
+        ReactDOM.createRoot(dom).render(<Loading />)
+    }
+    requestCount++
+}
+
+// 隱藏loading
+function hideLoading () {
+    requestCount--
+    if (requestCount === 0) {
+        document.body.removeChild(document.getElementById('loading') as HTMLElement)
+    }
 }
 
 function filterObject(o: Record<string, string>, filter: Function) {
@@ -50,6 +72,7 @@ function dealErrToast(err: Error & ICustomRequestError, abortController?: AbortC
 
 class Http implements IHttpInterface {
     public async fetchHandler<T>(url: string, options?: IRequestOptions, abortController?: AbortController): Promise<T> {
+        showLoading()
         if (process.env.NODE_ENV === 'development') {
             console.log('请求地址====================》', url)
             console.log('请求参数====================》', options?.params)
@@ -98,8 +121,10 @@ class Http implements IHttpInterface {
                 }),
             ])
             const result = await res.json()
+            await hideLoading()
             return result
         } catch (e: any) {
+            hideLoading()
             dealErrToast(e, abortController)
             return e
         }

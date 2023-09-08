@@ -1,7 +1,7 @@
 /*
  * @Author: caishiyin
  * @Date: 2020-12-09 15:15:06
- * @LastEditTime: 2023-08-30 13:46:50
+ * @LastEditTime: 2023-09-09 01:10:35
  * @LastEditors: caishiyin
  * @Description:
  * @FilePath: /blog-tsx/src/pages/About.tsx
@@ -20,7 +20,7 @@ const About: React.FC = () => {
     return (
         <>
             <BannerBox title='About Me' bannerUrl={BannerImgUrl} />
-            <Row justify='center' gutter={25}>
+            <Row justify='center'>
                 <Col className='about' xs={22} sm={22} xl={20} xxl={18}>
                     <p>CV工程师，目前无业游民状态；</p>
                     <p>之前的工作重心主要是VueJs，小程序，公众号H5页面等；</p>

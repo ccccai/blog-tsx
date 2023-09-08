@@ -1,7 +1,7 @@
 /*
  * @Author: caishiyin
  * @Date: 2020-06-14 23:10:48
- * @LastEditTime: 2023-09-08 12:02:18
+ * @LastEditTime: 2023-09-09 03:03:12
  * @LastEditors: caishiyin
  * @Description:
  * @FilePath: /blog-tsx/src/pages/Home.tsx
@@ -12,6 +12,7 @@ import { Card, Row, Col, Tag, Avatar } from 'antd'
 import { navList as menuList } from '../assets/settings'
 import '../styles/home.less'
 import BlogInfo from '../components/InfoBox'
+// import Loading from '../components/Loading'
 
 const { Meta } = Card
 const firstStyle = { height: 200 }
@@ -155,6 +156,7 @@ const Home: React.FC = () => {
     const { loading, data } = useFetchData<IHomePageResData>('/blog/home')
     return (
         <div className='home'>
+            {/* <Loading /> */}
             <HeaderImg />
             <BodyContent loading={loading} data={data} />
         </div>

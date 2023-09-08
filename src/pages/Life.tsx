@@ -54,7 +54,7 @@ const Life: React.FC = () => {
     return (
         <>
             <BannerBox title='Life Notes' bannerUrl={BannerImgUrl} />
-            <Row justify='center' gutter={25}>
+            <Row justify='center'>
                 <Col xs={24} sm={22} lg={22} xl={18} xxl={16} className='life-box'>
                     <div className='life-content'>
                         <NotesList list={articleList} total={total} pageSize={pageSize} pageNo={pageNo} onPageChange={handlePage} />
