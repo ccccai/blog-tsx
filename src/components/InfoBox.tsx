@@ -1,14 +1,14 @@
 /*
  * @Author: caishiyin
  * @Date: 2020-12-09 15:15:06
- * @LastEditTime: 2023-09-07 23:58:48
+ * @LastEditTime: 2023-09-10 01:21:26
  * @LastEditors: caishiyin
  * @Description:
  * @FilePath: /blog-tsx/src/components/InfoBox.tsx
  */
 import { Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
-// import avatarUrl from '../assets/images/avatar.jpg'
+import avatarUrl from '../assets/images/avatar.jpg'
 import { ReactComponent as Git } from '../assets/images/svg/github.svg'
 import { ReactComponent as Mail } from '../assets/images/svg/mail.svg'
 import { ReactComponent as Category } from '../assets/images/svg/category.svg'
@@ -46,7 +46,7 @@ const BlogInfoBox: React.FC<IProps> = ({ blogInfo, categories, tags, count }) =>
         <Row gutter={[0, 30]} className='blog-info-content' justify='space-around'>
             <Col span={24} className='blog-info-box persion-info'>
                 <div className='avatar'>
-                    <img alt='头像' title='头像' src={info.avatar} />
+                    <img alt='头像' title='头像' src={avatarUrl} />
                 </div>
                 <div className='name'>{info.nickName}</div>
                 <div className='sub-title'>

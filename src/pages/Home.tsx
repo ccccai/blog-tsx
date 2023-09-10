@@ -1,7 +1,7 @@
 /*
  * @Author: caishiyin
  * @Date: 2020-06-14 23:10:48
- * @LastEditTime: 2023-09-09 03:03:12
+ * @LastEditTime: 2023-09-09 06:42:29
  * @LastEditors: caishiyin
  * @Description:
  * @FilePath: /blog-tsx/src/pages/Home.tsx
@@ -75,7 +75,7 @@ const ContentRecentArticle = (props: any = {}) => (
             {props.data &&
                 props.data.map((item: any, index: number) => (
                     <Col key={'dd' + index} xs={24} sm={24} md={24} lg={8} xl={8} className='card-box'>
-                        <Link to={item.link}>
+                        <Link to={`/article?id=${item.id}`}>
                             <Card cover={<div className='cover-img' style={{ ...firstStyle, backgroundImage: `url(${item.cover})` }} />} className='card-item'>
                                 <Meta className='box-bottom-title' title={item.title} description={item.subTitle} />
                             </Card>
@@ -99,7 +99,7 @@ const ContentFeaturedArticles = (props: any = {}) => {
             <Row gutter={[0, 40]} className='box-content' justify='space-around'>
                 {data.map((item: any, index: number) => (
                     <Col key={'card' + index} span={24} className='card-box'>
-                        <Link to={item.link}>
+                        <Link to={`/article?id=${item.id}`}>
                             <Card cover={<div className='cover-img' style={{ ...secondStyle, backgroundImage: `url(${item.cover})` }} />} className='card-item'>
                                 <div className='box-description'>
                                     <div className='tag-content'>
@@ -153,12 +153,11 @@ const BodyContent = (props: any) => {
 }
 const Home: React.FC = () => {
     // 组件加载完毕，请求数据
-    const { loading, data } = useFetchData<IHomePageResData>('/blog/home')
+    const { data } = useFetchData<IHomePageResData>('/blog/home')
     return (
         <div className='home'>
-            {/* <Loading /> */}
             <HeaderImg />
-            <BodyContent loading={loading} data={data} />
+            <BodyContent data={data} />
         </div>
     )
 }

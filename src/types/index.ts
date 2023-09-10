@@ -1,7 +1,7 @@
 /*
  * @Author: caishiyin
  * @Date: 2020-12-10 14:53:10
- * @LastEditTime: 2023-09-06 21:46:09
+ * @LastEditTime: 2023-09-09 04:46:38
  * @LastEditors: caishiyin
  * @Description:
  * @FilePath: /blog-tsx/src/types/index.ts
@@ -35,9 +35,7 @@ export interface IRequestOptions {
     headers?: IHeaderConfig
     signal?: AbortSignal
     method?: EHttpMethods
-    // query?: IAnyMap
     params?: IAnyMap
-    // data?: IAnyMap
     body?: any
     timeout?: number
     credentials?: 'include' | 'same-origin'

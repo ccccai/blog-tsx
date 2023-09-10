@@ -1,7 +1,7 @@
 /*
  * @Author: caishiyin
  * @Date: 2020-12-09 15:15:06
- * @LastEditTime: 2023-09-09 00:44:18
+ * @LastEditTime: 2023-09-11 02:02:43
  * @LastEditors: caishiyin
  * @Description:
  * @FilePath: /blog-tsx/src/components/TimelineList.tsx
@@ -35,7 +35,7 @@ const TimelineList = (props: ListProps) => {
                                     <div className='list-year'>{item.date}</div>
                                     <div className='list-box-info'>
                                         {item.list.map((article, aIndex) => (
-                                            <a href={article.link} className='list-box' key={`a${aIndex}`}>
+                                            <a href={`/article?id=${article.id}`} className='list-box' key={`a${aIndex}`}>
                                                 <div className='list-img' style={{ backgroundImage: `url(${article.cover})` }} />
                                                 <div className='list-desc'>
                                                     <div className='desc-date'>
@@ -43,6 +43,7 @@ const TimelineList = (props: ListProps) => {
                                                         <span>{article.createDate}</span>
                                                     </div>
                                                     <div className='desc-title'>{article.title}</div>
+                                                    <div className='desc-subtitle'>{article.subTitle}</div>
                                                 </div>
                                             </a>
                                         ))}
@@ -54,7 +55,11 @@ const TimelineList = (props: ListProps) => {
                         })}
                 </div>
                 <div className='pager-content'>
-                    <Pagination showTotal={total => `Total ${total} article`} pageSize={pageSize} current={pageNo} total={total} onChange={onPageChange} />
+                    {total > 0 ? (
+                        <Pagination showTotal={total => `Total ${total} article`} pageSize={pageSize} current={pageNo} total={total} onChange={onPageChange} />
+                    ) : (
+                        <span>这个作者很懒，什么都没有写~~</span>
+                    )}
                 </div>
             </div>
         </>

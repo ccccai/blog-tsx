@@ -7,7 +7,7 @@ import { IFetchParams, IRequestOptions, IResponseData, EHttpMethods } from '../t
 import { message } from 'antd'
 import Loading from '../components/Loading'
 
-export const requestPath = 'http://192.168.1.3:3232'
+export const requestPath = 'http://127.0.0.1:3232'
 const CAN_SEND_METHOD = ['POST', 'PUT', 'PATCH', 'DELETE']// 當前正在請求的數量
 let requestCount = 0
 
@@ -121,6 +121,9 @@ class Http implements IHttpInterface {
                 }),
             ])
             const result = await res.json()
+            if (result?.resultCode !== 0) {
+                message.error(result?.resultMessage || '接口请求出错')
+            }
             await hideLoading()
             return result
         } catch (e: any) {

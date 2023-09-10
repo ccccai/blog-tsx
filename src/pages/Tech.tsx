@@ -17,7 +17,6 @@ const Tech: React.FC = () => {
     // 超时或者页面销毁/路由跳转，取消请求
     const abortControllerRef = useRef<AbortController>()
 
-    const [loading, setLoading] = useState<boolean>(false)
     const [total, setTotal] = useState<number>(0)
     const [pageNo, setPageNo] = useState<number>(1)
     const [pageSize, setPageSize] = useState<number>(10)
@@ -25,7 +24,6 @@ const Tech: React.FC = () => {
     const [articleList, setArticleListData] = useState<any>()
 
     function destory() {
-        setLoading(false)
         setPageNo(1)
         setPageSize(10)
         setTotal(0)
@@ -48,7 +46,6 @@ const Tech: React.FC = () => {
 
     // 组件加载完毕，请求数据
     useEffect(() => {
-        setLoading(true)
         fetchSidebarData().then((res: any) => {
             console.log('fetchSidebarData', res)
             if (Number(res.resultCode) === 0 && res?.data) {
@@ -61,9 +58,6 @@ const Tech: React.FC = () => {
         return () => destory()
     }, [])
 
-    console.log('loading', loading)
-    // console.log('pageNo', pageNo)
-    // console.log('total', total)
     return (
         <>
             <BannerBox title='Technology' bannerUrl={BannerImgUrl} />

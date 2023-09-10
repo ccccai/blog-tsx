@@ -1,6 +1,15 @@
+/*
+ * @Author: caishiyin
+ * @Date: 2020-12-09 15:15:06
+ * @LastEditTime: 2023-09-10 01:27:25
+ * @LastEditors: caishiyin
+ * @Description:
+ * @FilePath: /blog-tsx/src/components/NotesList.tsx
+ */
 import '../styles/notes-list.less'
+import '../styles/note.less'
 import { Pagination } from 'antd'
-import { ReactComponent as Time } from '../assets/images/svg/time.svg'
+import NoteItem from './NoteItem'
 
 interface ListProps {
     list: Array<{
@@ -27,17 +36,7 @@ const NotesList = (props: ListProps) => {
                                     <div className='list-year'>{item.date}</div>
                                     <div className='list-box-info'>
                                         {item.list.map((article, aIndex) => (
-                                            <a href={article.link} className='list-box' key={`a${aIndex}`}>
-                                                <div className='list-img' style={{ backgroundImage: `url(${article.cover})` }} />
-                                                <div className='list-desc'>
-                                                    <div className='desc-title'>{article.title}</div>
-                                                    <div className='desc-date'>
-                                                        <Time />
-                                                        <span>{article.createDate}</span>
-                                                    </div>
-                                                    <div className='desc-text'>{article.description}</div>
-                                                </div>
-                                            </a>
+                                            <NoteItem data={article} key={`a${aIndex}`} />
                                         ))}
                                     </div>
                                 </div>
@@ -47,7 +46,11 @@ const NotesList = (props: ListProps) => {
                         })}
                 </div>
                 <div className='pager-content'>
-                    <Pagination showTotal={total => `Total ${total} article`} pageSize={pageSize} current={pageNo} total={total} onChange={onPageChange} />
+                    {total > 0 ? (
+                        <Pagination showTotal={total => `Total ${total} article`} pageSize={pageSize} current={pageNo} total={total} onChange={onPageChange} />
+                    ) : (
+                        <span>这个作者很懒，什么都没有写~~</span>
+                    )}
                 </div>
             </div>
         </>

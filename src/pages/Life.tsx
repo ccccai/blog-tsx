@@ -15,14 +15,12 @@ const Life: React.FC = () => {
     // 超时或者页面销毁/路由跳转，取消请求
     const abortControllerRef = useRef<AbortController>()
 
-    const [loading, setLoading] = useState<boolean>(false)
     const [total, setTotal] = useState<number>(0)
     const [pageNo, setPageNo] = useState<number>(1)
     const [pageSize, setPageSize] = useState<number>(10)
     const [articleList, setArticleListData] = useState<any>()
 
     function destory() {
-        setLoading(false)
         setPageNo(1)
         setPageSize(10)
         setTotal(0)
@@ -34,7 +32,6 @@ const Life: React.FC = () => {
         setPageNo(pageNo)
         setPageSize(pageSize)
         fetchArticleList({ pageNo, pageSize }).then((res: any) => {
-            console.log('fetchArticleList', res)
             if (Number(res.resultCode) === 0 && res?.data) {
                 setArticleListData(res.data?.list)
                 setTotal(res.data?.total || 0)
@@ -44,13 +41,11 @@ const Life: React.FC = () => {
 
     // 组件加载完毕，请求数据
     useEffect(() => {
-        setLoading(true)
         handlePage(1, 10)
 
         return () => destory()
     }, [])
 
-    console.log('loading', loading)
     return (
         <>
             <BannerBox title='Life Notes' bannerUrl={BannerImgUrl} />
